@@ -9,10 +9,12 @@ import {
   existsOrError,
   notExistsOrError,
 } from '../utils/validation';
+import { CreateTaskService } from './CreateTaskService';
 
-class CreateUserService {
+export class CreateUserService {
   async execute({ name, initiais, email, password, confirmPassword }: IUser) {
     const userRepository = getCustomRepository(UserRepository);
+    const createTaskService = new CreateTaskService();
 
     existsOrError(name, 'Nome é Necessário(a)');
     existsOrError(initiais, 'Iniciais são Necessário(a)');
@@ -37,8 +39,15 @@ class CreateUserService {
 
     await userRepository.save(user);
 
+    await createTaskService.execute({
+      user_id: user.id,
+      name: 'Primeiro Login',
+      description: 'Está é uma tarefa criada por padrão pelo sistema.',
+      priority: 0,
+      deadline: new Date(),
+      done: true,
+    });
+
     return user;
   }
 }
-
-export { CreateUserService };

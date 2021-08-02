@@ -4,13 +4,15 @@
 import { Request, Response } from 'express';
 import { UpdateTaskService } from '../services/UpdateTaskService';
 
-export class CreateTaskController {
+export class UpdateTaskController {
   async handle(req: Request, res: Response) {
     const { user_id, name, description, priority, deadline } = req.body;
+    const { id } = req.params;
 
     const updateTaskService = new UpdateTaskService();
 
     const task = await updateTaskService.execute({
+      id: Number(id),
       user_id,
       name,
       description,
