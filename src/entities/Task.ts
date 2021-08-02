@@ -1,27 +1,41 @@
+/* eslint-disable camelcase */
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { User } from './User';
 
-@Entity('users')
-export class User {
+@Entity('tasks')
+export class Task {
   @PrimaryGeneratedColumn()
   readonly id: number;
+
+  @Column()
+  user_id: number;
+
+  @JoinColumn({ name: 'user_id' })
+  @ManyToOne(() => User)
+  userId: User;
 
   @Column()
   name: string;
 
   @Column()
-  initiais: string;
+  description: string;
 
   @Column()
-  email: string;
+  priority: number;
 
   @Column()
-  password: string;
+  deadline: Date;
+
+  @Column()
+  done: boolean;
 
   @CreateDateColumn({ name: 'created_at' })
   createAt: Date;
