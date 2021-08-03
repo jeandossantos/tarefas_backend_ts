@@ -7,6 +7,7 @@ import { DeleteUserController } from './controllers/DeleteUserController';
 import { ListTasksController } from './controllers/ListTasksController';
 import { UpdateUserController } from './controllers/UpdateUserController';
 import { FinishTaskController } from './controllers/FinishTaskController';
+import { StatsTasksController } from './controllers/StatsTasksController';
 
 const createUserController = new CreateUserController();
 const updateUserController = new UpdateUserController();
@@ -16,6 +17,7 @@ const listTasksController = new ListTasksController();
 const deleteTaskController = new DeleteTaskController();
 const updateTaskController = new UpdateTaskController();
 const finishTaskController = new FinishTaskController();
+const statsTasksController = new StatsTasksController();
 
 const routes = Router();
 
@@ -30,5 +32,8 @@ routes.put('/tasks/:id', updateTaskController.handle);
 routes.get('/tasks', listTasksController.handle);
 routes.delete('/tasks/:id', deleteTaskController.handle);
 routes.post('/tasks/finish/:id', finishTaskController.handle);
+
+// stats
+routes.get('/stats', statsTasksController.handle);
 
 export { routes };
