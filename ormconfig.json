@@ -6,7 +6,7 @@
   "password": "94198380",
   "database": "novatask",
   "synchronize": false,
-  "logging": false,
+  "logging": true,
   "entities": [
     "./src/entities/*.ts"
   ],
