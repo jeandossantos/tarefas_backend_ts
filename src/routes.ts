@@ -9,6 +9,8 @@ import { UpdateUserController } from './controllers/UpdateUserController';
 import { FinishTaskController } from './controllers/FinishTaskController';
 import { StatsTasksController } from './controllers/StatsTasksController';
 import { ListDailyTasksController } from './controllers/ListDailyTasksController';
+import { AuthController } from './controllers/AuthController';
+import { ValidationTokenController } from './controllers/ValidationTokenController';
 
 const createUserController = new CreateUserController();
 const updateUserController = new UpdateUserController();
@@ -20,11 +22,17 @@ const updateTaskController = new UpdateTaskController();
 const finishTaskController = new FinishTaskController();
 const statsTasksController = new StatsTasksController();
 const listDailyTasksController = new ListDailyTasksController();
+const authController = new AuthController();
+const validationTokenController = new ValidationTokenController();
 
 const routes = Router();
 
+// auth
+routes.post('/signin', authController.handle);
+routes.post('/signup', createUserController.handle);
+routes.post('/validatetoken', validationTokenController.handle);
+
 // users
-routes.post('/users', createUserController.handle);
 routes.put('/users/:id', updateUserController.handle);
 routes.delete('/users/:id', deleteUserController.handle);
 

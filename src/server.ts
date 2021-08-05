@@ -6,8 +6,11 @@ import helmet from 'helmet';
 import 'reflect-metadata';
 import 'express-async-errors';
 import './database/connection';
+import { config } from 'dotenv';
 import { routes } from './routes';
 import { CustomException } from './exception/CustomException';
+
+config();
 
 const app = express();
 
