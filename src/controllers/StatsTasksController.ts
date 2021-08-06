@@ -6,7 +6,7 @@ import { StatsTasksService } from '../services/StatsTasksService';
 
 export class StatsTasksController {
   async handle(req: Request, res: Response) {
-    const { user_id } = req.body;
+    const user_id = req.user.id;
 
     const statsTasksService = new StatsTasksService();
 

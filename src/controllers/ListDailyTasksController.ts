@@ -6,7 +6,7 @@ import { ListDailyTasksService } from '../services/ListDailyTasksService';
 
 export class ListDailyTasksController {
   async handle(req: Request, res: Response) {
-    const { user_id } = req.body;
+    const user_id = req.user.id;
     const search = req.query.search || '';
     const page = req.query.page || 1;
 

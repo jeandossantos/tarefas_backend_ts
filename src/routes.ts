@@ -11,6 +11,7 @@ import { StatsTasksController } from './controllers/StatsTasksController';
 import { ListDailyTasksController } from './controllers/ListDailyTasksController';
 import { AuthController } from './controllers/AuthController';
 import { ValidationTokenController } from './controllers/ValidationTokenController';
+import { ensureAuthenticated } from './middlewares/ensureAuthenticated';
 
 const createUserController = new CreateUserController();
 const updateUserController = new UpdateUserController();
@@ -33,18 +34,26 @@ routes.post('/signup', createUserController.handle);
 routes.post('/validatetoken', validationTokenController.handle);
 
 // users
-routes.put('/users/:id', updateUserController.handle);
-routes.delete('/users/:id', deleteUserController.handle);
+routes.put('/users/:id', ensureAuthenticated(), updateUserController.handle);
+routes.delete('/users/:id', ensureAuthenticated(), deleteUserController.handle);
 
 // tasks
-routes.post('/tasks', createTaskController.handle);
-routes.put('/tasks/:id', updateTaskController.handle);
-routes.get('/tasks', listTasksController.handle);
-routes.delete('/tasks/:id', deleteTaskController.handle);
-routes.post('/tasks/finish/:id', finishTaskController.handle);
-routes.get('/tasks/daily', listDailyTasksController.handle);
+routes.post('/tasks', ensureAuthenticated(), createTaskController.handle);
+routes.put('/tasks/:id', ensureAuthenticated(), updateTaskController.handle);
+routes.get('/tasks', ensureAuthenticated(), listTasksController.handle);
+routes.delete('/tasks/:id', ensureAuthenticated(), deleteTaskController.handle);
+routes.post(
+  '/tasks/finish/:id',
+  ensureAuthenticated(),
+  finishTaskController.handle,
+);
+routes.get(
+  '/tasks/daily',
+  ensureAuthenticated(),
+  listDailyTasksController.handle,
+);
 
 // stats
-routes.get('/stats', statsTasksController.handle);
+routes.get('/stats', ensureAuthenticated(), statsTasksController.handle);
 
 export { routes };
